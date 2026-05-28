@@ -327,11 +327,15 @@ button, .btn, .ftab, .btn-copy, .btn-gold, .btn-ghost, .modal-close {
 }
 .media-preview audio{width:100%;outline:none}
 .media-preview img{
-  max-width:100%;max-height:340px;
-  display:block;margin:0 auto;
+  width:100%;
+  max-height:340px;
+  min-height:120px;
+  display:block;
+  margin:0 auto;
   border-radius:var(--r-md);
   border:1px solid var(--border);
-  background:var(--surface-3);
+  background:var(--surface-2);
+  object-fit:contain;
 }
 
 /* TRANSCRIPTION */
@@ -496,7 +500,7 @@ textarea:focus{border-color:var(--border-hi)}
 .sec-body{padding:20px}
 
 /* METRICS */
-.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.metrics-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}
 .metric-card{
   background:var(--bg-2);
   border:1px solid var(--border);
@@ -1264,90 +1268,7 @@ textarea:focus{border-color:var(--border-hi)}
 
     <div class="results" id="results">
 
-      <div class="section">
-        <div class="sec-hd">
-          <div class="sec-title"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>Contexto geral</div>
-        </div>
-        <div class="sec-body">
-          <div class="metrics-grid">
-            <div class="metric-card">
-              <div class="metric-label">Maturidade do processo</div>
-              <div class="metric-value" id="m-score">—</div>
-              <div class="metric-bar"><div class="metric-bar-fill" id="m-bar" style="width:0%"></div></div>
-              <div class="metric-sub" id="m-label" style="margin-top:7px">—</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Tarefas identificadas</div>
-              <div class="metric-value" id="m-tasks">—</div>
-              <div class="metric-sub" id="m-areas">—</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Sprints estimadas</div>
-              <div class="metric-value" id="m-sprints">—</div>
-              <div class="metric-sub" id="m-weeks">—</div>
-            </div>
-          </div>
-          <div class="gold-rule"><div class="gold-rule-line"></div><div class="gold-rule-diamond"></div><div class="gold-rule-line r"></div></div>
-          <div id="ctx-blocks"></div>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="sec-hd">
-          <div class="sec-title"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>Cronograma de sprints</div>
-          <div class="sec-meta" id="sprint-meta">—</div>
-        </div>
-        <div class="sec-body" id="sprint-body"></div>
-      </div>
-
-      <div class="section">
-        <div class="sec-hd">
-          <div class="sec-title"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>Usuários impactados</div>
-        </div>
-        <div class="sec-body" id="users-body"></div>
-      </div>
-
-      <div class="section">
-        <div class="sec-hd">
-          <div class="sec-title"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>Tarefas identificadas</div>
-          <div class="sec-meta" id="tasks-meta">—</div>
-        </div>
-        <div class="sec-body">
-          <div class="filter-bar" id="filter-bar"></div>
-          <div id="tasks-body"></div>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="sec-hd">
-          <div class="sec-title"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>Workflow visual</div>
-        </div>
-        <div class="sec-body" id="wf-body"></div>
-      </div>
-
-      <div class="section">
-        <div class="sec-hd">
-          <div class="sec-title"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>Análise crítica</div>
-          <div class="sec-meta" id="crit-meta">—</div>
-        </div>
-        <div class="sec-body" id="crit-body"></div>
-      </div>
-
-      <div class="section">
-        <div class="sec-hd">
-          <div class="sec-title"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg></div>Sugestões de melhoria</div>
-        </div>
-        <div class="sec-body" id="sug-body"></div>
-      </div>
-
-      <div class="section">
-        <div class="sec-hd">
-          <div class="sec-title"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>Riscos se não agir</div>
-          <div class="sec-meta" id="risk-meta">—</div>
-        </div>
-        <div class="sec-body" id="risk-body"></div>
-      </div>
-
+      <div class="section" id="sec-contexto-placeholder" style="display:none"></div>
     </div>
   </div>
 </main>
@@ -1358,20 +1279,50 @@ const EXAMPLE=`Reunião de planejamento — Módulo de assinaturas recorrentes\n
 
 const DEFAULT_PROMPT = `Você é um agente especializado em análise de processos e escrita de tarefas para times de Produto, UX, E-commerce e Desenvolvimento. Analise qualquer tipo de demanda recebida e retorne SOMENTE um JSON válido, sem markdown, sem explicações, sem blocos de código.
 
-ETAPA OBRIGATÓRIA — VERIFICAÇÃO DE INFORMAÇÕES:
-Antes de gerar qualquer análise, verifique se a demanda possui informações suficientes sobre: objetivo, usuários impactados, regras de negócio, sistemas envolvidos e responsáveis. Se faltar informação que impeça a geração de tarefas completas e corretas, retorne APENAS:
+ETAPA OBRIGATÓRIA — AVALIAÇÃO DA DEMANDA:
+Sempre que receber uma demanda, siga esta ordem de decisão:
+
+CASO 1 — HÁ INFORMAÇÃO SUFICIENTE PARA ANÁLISE:
+Para gerar a análise completa é obrigatório ter TODOS estes elementos:
+- Objetivo claro e definido (o que será desenvolvido e para quem)
+- Ao menos 2 regras de negócio concretas (não ideias ou referências)
+- Sistemas ou plataformas envolvidos identificados
+- Escopo mínimo definido (o que entra no MVP ou na entrega)
+
+Se todos esses elementos estiverem presentes: gere a análise completa com status "ok". Para pontos vagos dentro de tarefas específicas, use informacoes_pendentes. Inclua na analise_critica um item tipo "risco" com as definições ainda pendentes.
+
+CASO 2 — FALTAM DEFINIÇÕES ESSENCIAIS (brainstorming, lista de ideias, referências sem regras, escopo não definido):
+Retorne APENAS o JSON abaixo, sem mais nada:
 {"status":"info_insuficiente","mensagem":"Para gerar uma análise completa, preciso de mais algumas informações:","o_que_entendi":{"resumo":"Descreva em 2 a 4 linhas o que você já compreendeu sobre a demanda — objetivo aparente, contexto identificado, times possivelmente envolvidos e qualquer informação relevante que já foi fornecida.","pontos_identificados":["Ponto concreto que já foi entendido 1","Ponto concreto que já foi entendido 2"]},"perguntas":["Pergunta objetiva e específica 1?","Pergunta objetiva e específica 2?"]}
 
-SE TIVER INFORMAÇÃO SUFICIENTE, retorne APENAS:
+EXEMPLOS:
+- Lista de ideias e referências de mercado sem regras definidas → CASO 2
+- Ata de brainstorming sem escopo do MVP → CASO 2
+- Demanda com objetivo, regras, sistemas e escopo definidos, mesmo que com alguns pontos vagos → CASO 1
+- Demanda completa mas com 1 ou 2 pontos indefinidos → CASO 1 com informacoes_pendentes nas tarefas
+
+Quando retornar info_insuficiente: faça apenas as perguntas necessárias, sem quantidade mínima ou máxima. Analise o que falta e pergunte somente o que for relevante para o desenvolvimento. Cada pergunta deve ser específica e objetiva. Nunca agrupe duas perguntas em uma só.
+
+RETORNE APENAS:
 {"status":"ok","contexto_geral":{"resumo":"Resumo executivo da demanda em 2 a 3 linhas.","problema":"Principal problema ou dor identificada.","oportunidade":"Principal oportunidade ou ganho esperado."},"cronograma":{"tem_datas":false,"observacao":"Justificativa do cronograma ou uso das datas mencionadas.","sprints":[{"numero":1,"nome":"Nome descritivo da sprint","semanas":"Semanas 1–2","meta":"O que deve estar pronto e funcionando ao final desta sprint.","tarefas":["TASK-001","TASK-002"]}]},"usuarios":[{"nome":"Nome ou papel do usuário","descricao":"Como este usuário interage com a demanda ou é impactado por ela."}],"tarefas":{"backend":[{"id":"TASK-001","titulo":"Título curto, objetivo e acionável","sprint":"Sprint 1","prioridade":"alta|media|baixa","objetivo_e_contexto":"OBRIGATÓRIO. Mínimo 3 linhas. Descreva o cenário atual, qual problema esta tarefa resolve, por que ela é necessária e qual o impacto esperado. Tom executivo. Não repita o escopo. Não invente informações.","escopo":{"subtitulos":[{"nome":"🔹 Fluxo","itens":[{"tipo":"fazer","descricao":"Descrição completa e detalhada do que deve ser implementado. Nunca vaga ou genérica."},{"tipo":"nao_fazer","descricao":"Restrição ou limitação clara desta tarefa."}]}]},"arquivos":[{"tipo":"Figma","descricao":"Preencher SOMENTE se o conteúdo recebido mencionar arquivos, layouts ou links reais."}],"resultado_esperado":"OBRIGATÓRIO. Mínimo 2 linhas. Como o cenário deve ficar após a entrega, o que melhora, o que deixa de acontecer e qual o benefício prático. Não repita o escopo.","criterios_de_aceitacao":[{"titulo":"Título objetivo do cenário de teste","dado_que":"Contexto inicial completo e específico","quando":"Ação realizada de forma clara","entao":"Resultado esperado completo, verificável e testável"}],"informacoes_pendentes":["Preencher SOMENTE quando houver lacuna real de informação específica desta tarefa."]}],"frontend":[],"ux":[]},"workflow_visual":{"fases":[{"numero":1,"nome":"Nome da fase do processo","etapas":[{"id":"E1","nome":"Nome claro da etapa","responsavel":"Quem executa esta etapa","tipo":"normal|gargalo|atencao|automacao|decisao","descricao":"O que acontece nesta etapa em uma linha.","canal":"web|api|email|sistema|manual|automatico","proximo":["E2"],"se_sim":"","se_nao":""}]}]},"analise_critica":[{"tipo":"gargalo|risco|dependencia_tecnica|ineficiencia","titulo":"Título direto do problema identificado","descricao":"OBRIGATÓRIO. Mínimo 2 linhas. Honesto e direto, sem eufemismos. Impacto real no projeto ou operação.","recomendacao":"O que deve ser feito para resolver ou mitigar. Específico e acionável.","ferramenta_ia":"Nome da ferramenta de IA sugerida se aplicável. String vazia se não aplicável."}],"sugestoes_de_melhoria":[{"categoria":"ia|automacao|processo|ferramenta","titulo":"Título da sugestão","descricao":"Como essa melhoria resolve um problema identificado.","beneficio":"Ganho prático e mensurável esperado.","ferramentas":["Ferramenta 1","Ferramenta 2"],"complexidade":"alta|media|baixa"}],"riscos_se_nao_agir":[{"titulo":"Título claro do risco","descricao":"Impacto concreto — operacional, financeiro ou de prazo."}]}
 
 REGRAS OBRIGATÓRIAS:
 
-[R1] VERIFICAÇÃO ANTES DE TUDO
-Se faltar objetivo, usuários, regras de negócio, sistemas ou responsáveis relevantes: retorne info_insuficiente com perguntas objetivas em PT-BR. Nunca invente dados para preencher lacunas.
+[R1] ANÁLISE PARCIAL COM DADOS INCOMPLETOS
+Sempre que houver contexto mínimo identificável (objetivo + ao menos 2 regras de negócio + sistemas envolvidos + escopo definido), gere a análise com status "ok". Marque lacunas como informacoes_pendentes nas tarefas e como risco na analise_critica. Nunca invente regras de negócio, sistemas ou responsáveis que não foram mencionados.
+Retorne info_insuficiente SOMENTE quando a demanda for vaga demais para gerar qualquer tarefa útil. Nesse caso, faça apenas as perguntas necessárias — sem quantidade mínima ou máxima. Cada pergunta deve ser específica, objetiva e ligada a uma lacuna concreta. Nunca agrupe duas em uma só.
 
-[R2] DESCRIÇÃO COMPLETA EM TODAS AS TAREFAS
-Todas as tarefas sem exceção precisam ter: objetivo_e_contexto com mínimo 3 linhas, escopo com subtítulos e itens detalhados, resultado_esperado com mínimo 2 linhas e ao menos 1 critério de aceitação no formato dado_que / quando / então. Nenhum campo pode ser vago, resumido ou genérico.
+[R2] PADRÃO DE ESCRITA DE TAREFAS
+Todas as tarefas devem seguir EXATAMENTE esta estrutura, sem exceção. Nunca resumir, nunca omitir seções, nunca repetir conteúdo entre seções, nunca inventar informações.
+
+Estrutura obrigatória de cada tarefa:
+- titulo: Título curto, objetivo e acionável
+- objetivo_e_contexto: OBRIGATÓRIO, mínimo 3 linhas. Explicar: cenário atual, problema ou oportunidade, motivo da tarefa, impacto esperado no negócio/operação/usuário. Tom executivo. Não repetir o escopo.
+- escopo: OBRIGATÓRIO. Descrever de forma operacional: o que deve ser feito, regras de negócio, fluxos, integrações, comportamentos esperados, exceções, restrições, dependências. Usar subtítulos como: 🔹 Fluxo, 🔹 Regras, 🔹 Integração, 🔹 Admin, 🔹 Checkout, 🔹 Telas, 🔹 Comportamento, 🔹 Layout, 🔹 Gatilho, 🔹 Conteúdo, 🔹 Dependências
+- arquivos: Preencher SOMENTE quando houver referências reais mencionadas na demanda (Figma, XD, Preview, links)
+- resultado_esperado: OBRIGATÓRIO, mínimo 2 linhas. Como o cenário fica após a entrega, o que melhora, o que deixa de acontecer, benefício prático. Não repetir o escopo.
+- criterios_de_aceitacao: OBRIGATÓRIO, ao menos 1. Formato: Dado que [contexto] / Quando [ação] / Então [resultado esperado]. Critérios claros, objetivos e testáveis. Validar fluxos principais e exceções.
+- informacoes_pendentes: Preencher SOMENTE quando houver lacuna real que impeça o desenvolvimento correto desta tarefa específica. Exemplos: SKU pendente, layout não aprovado, regra não definida, dependência técnica não resolvida.
 
 [R3] GERE TAREFAS APENAS PARA TIMES NECESSÁRIOS
 Analise a demanda antes de classificar. Deixe [] para times desnecessários:
@@ -1388,19 +1339,21 @@ Cada tela = 1 tarefa. Cada e-mail = 1 tarefa. Cada cron = 1 tarefa. Cada endpoin
 Use apenas os que fazem sentido: 🔹 Fluxo · 🔹 Regras · 🔹 Integração · 🔹 Admin · 🔹 Checkout · 🔹 Telas · 🔹 Comportamento · 🔹 Layout · 🔹 Gatilho · 🔹 Conteúdo · 🔹 Dependências
 
 [R6] CRONOGRAMA
-Sprints de 2 semanas. Use datas da demanda quando mencionadas. Se não, sugira com base na complexidade identificada respeitando dependências técnicas entre tarefas.
+Trabalhamos com metodologia Scrum. Organize as tarefas em sprints de 2 semanas, respeitando as dependências técnicas entre elas e a ordem lógica de entrega. Use datas mencionadas na demanda quando existirem. Se não houver datas, sugira o cronograma com base na complexidade e no volume de tarefas identificadas. Cada sprint deve ter uma meta clara e um conjunto coerente de tarefas que pode ser entregue e testado de forma independente.
 
 [R7] WORKFLOW VISUAL
-Mapeie o fluxo real do processo ou funcionalidade — não o fluxo de desenvolvimento. Represente quem faz o quê, em que ordem, com que canal e onde há decisões ou gargalos.
+Mapeie o fluxo real do processo ou da funcionalidade descrita — não o fluxo de desenvolvimento. Represente quem faz o quê, em que ordem e por qual canal. Priorize clareza e leitura fácil: use nomes curtos e objetivos nos nós, organize as etapas em swimlanes por responsável e mostre as decisões como losangos com os caminhos possíveis. O fluxo deve ser visualmente limpo, sem poluição visual, fácil de entender por qualquer pessoa da equipe.
 
-[R8] ANÁLISE CRÍTICA
-Analise todo o escopo das tarefas geradas. Seja honesto e direto, sem eufemismos. Identifique gargalos reais, riscos concretos e dependências bloqueantes. Sugira ferramentas de IA específicas quando aplicável: Claude API, AWS SageMaker, Adyen Account Updater, Datadog AI, Vertex AI, n8n, Zenvia, Klaviyo, Segment, etc.
+[R8] ANÁLISE CRÍTICA — OBRIGATÓRIA
+Analise criticamente o escopo completo da demanda. Identifique gargalos operacionais, riscos de prazo, dependências técnicas bloqueantes e ineficiências do processo atual. Seja honesto e direto, sem eufemismos. Cada item precisa ter descrição completa e recomendação específica e acionável. Quando uma ferramenta de IA puder ajudar naquele ponto específico, sugira a ferramenta mais adequada para aquela questão (ex: Claude API, AWS SageMaker, Adyen Account Updater, Datadog AI, Vertex AI, n8n, Zenvia, Klaviyo, Segment — apenas quando fizer sentido real). O campo analise_critica nunca pode ser um array vazio.
 
-[R9] SUGESTÕES DE MELHORIA
-Sugira melhorias práticas com benefício mensurável. Quando um problema puder ser resolvido com IA, inclua a ferramenta específica.
+[R8b] SUGESTÕES DE MELHORIA — OBRIGATÓRIAS
+Analise o escopo completo da demanda e sugira melhorias que fazem sentido para aquele contexto específico. Cada sugestão deve ter benefício mensurável e prático. Quando uma melhoria puder ser implementada com IA, indique a ferramenta específica mais adequada. O campo sugestoes_de_melhoria nunca pode ser um array vazio.
 
-[R10] RISCOS SE NÃO AGIR
-Liste riscos concretos — operacionais, financeiros ou de prazo. Não genéricos.
+[R8c] RISCOS SE NÃO AGIR — OBRIGATÓRIOS
+Analise o escopo completo da demanda e liste os riscos concretos — operacionais, financeiros ou de prazo — caso os problemas identificados não sejam endereçados. Riscos devem ser específicos para aquela demanda, nunca genéricos. O campo riscos_se_nao_agir nunca pode ser um array vazio.
+
+
 
 [R11] ARQUIVOS E PENDÊNCIAS
 "arquivos": preencher SOMENTE se o conteúdo mencionar arquivos, layouts ou links reais.
@@ -1421,104 +1374,12 @@ let customPrompt = null;
 const SB_URL = 'https://vjsqykohdbverotsxpxd.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqc3F5a29oZGJ2ZXJvdHN4cHhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5MDk3OTMsImV4cCI6MjA5NTQ4NTc5M30.0yg4bbpuHd5PJ6ybKSO_QBvR4tAE9XdArB8jfNV9yf0';
 
-// ── ANTHROPIC CONFIG ──
-const ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages';
-const ANTHROPIC_VERSION = '2023-06-01';
-const ANTHROPIC_KEY_STORAGE = 'anthropic_api_key';
-
-function getAnthropicApiKey(){
-  try{
-    return (localStorage.getItem(ANTHROPIC_KEY_STORAGE) || '').trim();
-  }catch(e){
-    return '';
-  }
-}
-
-function ensureAnthropicApiKey(){
-  var key = getAnthropicApiKey();
-  if(key) return key;
-  if(typeof prompt === 'function'){
-    key = (prompt('Informe a chave da Anthropic para liberar as chamadas da IA:') || '').trim();
-    if(key){
-      try{ localStorage.setItem(ANTHROPIC_KEY_STORAGE, key); }catch(e){}
-      return key;
-    }
-  }
-  return '';
-}
-
-function getAnthropicHeaders(){
-  var apiKey = ensureAnthropicApiKey();
-  if(!apiKey){
-    throw new Error('Chave da Anthropic não configurada.');
-  }
-  return {
-    'Content-Type': 'application/json',
-    'x-api-key': apiKey,
-    'anthropic-version': ANTHROPIC_VERSION
-  };
-}
-
-async function callAnthropicMessages(payload){
-  var res = await fetch(ANTHROPIC_URL, {
-    method: 'POST',
-    mode: 'cors',
-    headers: getAnthropicHeaders(),
-    body: JSON.stringify(payload)
-  });
-  var text = await res.text();
-  var data = {};
-  try{
-    data = text ? JSON.parse(text) : {};
-  }catch(e){
-    data = { raw: text };
-  }
-  if(!res.ok){
-    var apiMsg = data && data.error && data.error.message ? data.error.message : (data.message || data.raw || 'HTTP ' + res.status);
-    throw new Error(apiMsg);
-  }
-  return data;
-}
-
-// ── Detecta se está rodando dentro do sandbox do Claude Artifacts ──
-function isClaudeArtifact(){
-  try{
-    return window.location.hostname === '' ||
-           window.location.protocol === 'blob:' ||
-           window.location.href.indexOf('claude.ai') !== -1 ||
-           window.location.href.indexOf('artifacts') !== -1 ||
-           (window.self !== window.top);
-  }catch(e){ return true; }
-}
-
-// ── Salva via Claude como proxy (único domínio permitido no sandbox) ──
-async function sbInsertViaProxy(table, payload){
-  var clean = JSON.parse(JSON.stringify(payload));
-
-  // Prompt que instrui o Claude a fazer o INSERT no Supabase
-  var proxyPrompt = 'Você é um agente de integração. Execute este INSERT no Supabase via fetch e retorne apenas {"ok":true} ou {"ok":false,"error":"mensagem"}.\n\n' +
-    'URL: https://vjsqykohdbverotsxpxd.supabase.co/rest/v1/' + table + '\n' +
-    'Method: POST\n' +
-    'Headers: Content-Type: application/json | apikey: ' + SB_KEY + ' | Authorization: Bearer ' + SB_KEY + ' | Prefer: return=minimal\n' +
-    'Body: ' + JSON.stringify(clean);
-
-  var res = await callAnthropicMessages({
-    model: 'claude-haiku-4-5-20251001',
-    max_tokens: 64,
-    system: 'Você é um agente que apenas confirma operações. Responda somente com JSON puro, sem markdown.',
-    messages: [{ role: 'user', content: proxyPrompt }]
-  });
-  var txt = (res.content||[]).filter(function(b){return b.type==='text';}).map(function(b){return b.text;}).join('');
-  try{
-    var result = JSON.parse(txt.replace(/```json|```/g,'').trim());
-    if(result.ok === false) throw new Error(result.error||'Erro no proxy');
-  }catch(e){ /* se não parsear mas chegou aqui, consideramos ok */ }
-  return true;
-}
-
-// ── Salva diretamente via fetch REST (para localhost / servidor HTTP) ──
-async function sbInsertDirect(table, payload){
-  var body = JSON.stringify(JSON.parse(JSON.stringify(payload)));
+// ── Salva diretamente via fetch REST no Supabase ──
+// Observação: roda apenas em ambientes com CORS permitido (localhost ou domínio
+// próprio servindo este HTML). Em sandboxes que bloqueiam fetch para terceiros,
+// a chamada falhará e o indicador na sidebar mostrará "erro ao salvar".
+async function sbInsert(table, payload){
+  var body = JSON.stringify(payload);
   var res = await fetch(SB_URL + '/rest/v1/' + table, {
     method:  'POST',
     mode:    'cors',
@@ -1537,14 +1398,6 @@ async function sbInsertDirect(table, payload){
   return true;
 }
 
-// ── Roteador: escolhe o método correto conforme o ambiente ──
-async function sbInsert(table, payload){
-  if(isClaudeArtifact()){
-    return sbInsertViaProxy(table, payload);
-  }
-  return sbInsertDirect(table, payload);
-}
-
 // ── Auto-save silencioso — análise completa ──
 function autoSaveAnalysis(parsed){
   try{
@@ -1560,7 +1413,6 @@ function autoSaveAnalysis(parsed){
       resumo:        ctx.resumo||null,
       problema:      ctx.problema||null,
       oportunidade:  ctx.oportunidade||null,
-      maturidade:    ctx.maturidade||0,
       total_tarefas: totalT,
       total_sprints: sprints.length,
       payload:       cleanPayload,
@@ -1807,17 +1659,43 @@ async function runTarefaPadrao(){
   },1800);
 
   try{
-    const res=await callAnthropicMessages({
-      model:'claude-sonnet-4-20250514',
-      max_tokens:4000,
-      system:TP_SYSTEM_PROMPT,
-      messages:[{role:'user',content:input}]
+    // Gorq AI request. Use a backend proxy at `/api/gorq` by default.
+    // Configure `window.GORQ_API_URL` in the page to point elsewhere if needed.
+    const gorqUrl = window.GORQ_API_URL || '/api/gorq';
+    // Do NOT put your API key in the client. Prefer setting it server-side in .env.
+    const gorqKey = window.GORQ_API_KEY || '';
+    const headers = {'Content-Type':'application/json'};
+    if(gorqKey) headers['Authorization'] = 'Bearer ' + gorqKey; // only if intentionally provided (not recommended)
+
+    const res = await fetch(gorqUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        model: 'gorq-default',
+        input: input,
+        max_tokens: 8000,
+        system: TP_SYSTEM_PROMPT
+      })
     });
+
     clearInterval(loadIv);
-    const md=(res.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
-    tpMarkdownResult=md;
+    const data = await res.json();
+    if(!res.ok){
+      const apiErr = (data.error && data.error.message) || JSON.stringify(data);
+      throw new Error('Erro da API ('+res.status+'): '+apiErr);
+    }
+
+    // Normalize possible Gorq response shapes into a single markdown string
+    let md = '';
+    if(Array.isArray(data.output)) md = data.output.map(o => o.text || o.content || o).join('');
+    else if(data.output) md = data.output.text || data.output.content || JSON.stringify(data.output);
+    else if(data.text) md = data.text;
+    else if(data.choices) md = data.choices.map(c => c.text || c.message?.content).join('');
+    else md = JSON.stringify(data);
+
+    tpMarkdownResult = md;
     document.getElementById('tp-loading').style.display='none';
-    document.getElementById('tp-result').innerHTML=renderMarkdown(md);
+    document.getElementById('tp-result').innerHTML = renderMarkdown(md);
     document.getElementById('tp-result').style.display='block';
     document.getElementById('tp-copy-jira-btn').style.display='inline-flex';
   }catch(e){
@@ -1901,7 +1779,7 @@ function copyTarefaJira(){
 let allTasks=[],activeArea='Todos',lastData=null;
 
 function safeParseJSON(str){
-  try{return JSON.parse(str);}catch(e){}
+  try{return JSON.parse(str);}catch(e){console.warn('JSON parse falhou (tentando reparar):', e.message, '\nRaw (primeiros 400 chars):', str.substring(0,400));}
   let s=str.trim(),inStr=false,escaped=false;
   const opens=[];
   for(let i=0;i<s.length;i++){
@@ -1981,10 +1859,10 @@ function handleFile(event,type){
 
   // Revogar URL anterior se existir
   if(objectUrls[type]){URL.revokeObjectURL(objectUrls[type]);objectUrls[type]=null;}
-  const url=URL.createObjectURL(file);
-  objectUrls[type]=url;
 
   if(type==='audio'){
+    const url=URL.createObjectURL(file);
+    objectUrls[type]=url;
     const player=document.getElementById('audio-player');
     if(player)player.src=url;
     const preview=document.getElementById('audio-preview');
@@ -1993,10 +1871,17 @@ function handleFile(event,type){
     if(tArea)tArea.value='';
     setTranscribeStatus('');
   } else if(type==='image'){
-    const img=document.getElementById('image-preview-img');
-    if(img)img.src=url;
-    const preview=document.getElementById('image-preview');
-    if(preview)preview.style.display='block';
+    // Usar FileReader/base64 para compatibilidade com sandbox do Claude Artifacts
+    const reader=new FileReader();
+    reader.onload=function(e){
+      const dataUrl=e.target.result;
+      objectUrls[type]=dataUrl; // guarda o dataURL no lugar do blobURL
+      const img=document.getElementById('image-preview-img');
+      if(img)img.src=dataUrl;
+      const preview=document.getElementById('image-preview');
+      if(preview)preview.style.display='block';
+    };
+    reader.readAsDataURL(file);
   }
 }
 
@@ -2195,13 +2080,70 @@ async function runAgent(){
   const sys = customPrompt || DEFAULT_PROMPT;
 
   let prog=10;
-  const iv=setInterval(()=>{prog=Math.min(prog+4,80);setProgress(prog);},400);
+  const iv=setInterval(()=>{prog=Math.min(prog+3,75);setProgress(prog);},500);
   try{
-    setStatus('Extraindo metadados e tarefas...');
-    const res=await callAnthropicMessages({model:'claude-sonnet-4-20250514',max_tokens:8000,system:sys,messages:[{role:'user',content:userMessage}]});
-    clearInterval(iv);setProgress(90);setStatus('Montando relatório...');
-    const raw=(res.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
-    const clean=raw.replace(/```json|```/g,'').trim();
+    setStatus('Enviando para o agente...');
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:100000,
+        stream:true,
+        system:sys,
+        messages:[{role:'user',content:userMessage}]
+      })
+    });
+
+    if(!res.ok){
+      clearInterval(iv);
+      const errData=await res.json().catch(()=>({}));
+      const apiErr=(errData.error&&errData.error.message)||('HTTP '+res.status);
+      throw new Error('Erro da API: '+apiErr);
+    }
+
+    // ── Lê o stream SSE e acumula o texto completo ──
+    const reader=res.body.getReader();
+    const decoder=new TextDecoder();
+    let raw='';
+    let buffer='';
+    let tokenCount=0;
+
+    setStatus('Recebendo resposta...');
+
+    while(true){
+      const {done,value}=await reader.read();
+      if(done) break;
+      buffer+=decoder.decode(value,{stream:true});
+      const lines=buffer.split('\n');
+      buffer=lines.pop(); // guarda linha incompleta
+      for(const line of lines){
+        if(!line.startsWith('data: ')) continue;
+        const data=line.slice(6).trim();
+        if(data==='[DONE]') continue;
+        try{
+          const evt=JSON.parse(data);
+          if(evt.type==='content_block_delta'&&evt.delta&&evt.delta.type==='text_delta'){
+            raw+=evt.delta.text;
+            tokenCount++;
+            // Atualiza progresso e status a cada ~200 tokens
+            if(tokenCount%200===0){
+              prog=Math.min(prog+2,88);
+              setProgress(prog);
+              const kb=Math.round(raw.length/1024);
+              setStatus('Recebendo resposta... '+kb+'kb');
+            }
+          }
+          if(evt.type==='message_stop') break;
+        }catch(_){}
+      }
+    }
+
+    clearInterval(iv);
+    setProgress(92);
+    setStatus('Montando relatório...');
+
+    const clean=raw.replace(/```json[\s\S]*?```|```/g,'').trim();
     const parsed=safeParseJSON(clean);
 
     if(parsed.status==='info_insuficiente'){
@@ -2214,7 +2156,6 @@ async function runAgent(){
 
     if(parsed.status==='ok'){
       lastData=parsed;
-      // Marca a origem para o histórico
       if(!parsed.__meta)parsed.__meta={};
       parsed.__meta.modelo=currentModel;
       parsed.__meta.preview=preview.length>180?preview.slice(0,180)+'…':preview;
@@ -2226,17 +2167,19 @@ async function runAgent(){
         document.getElementById('results').classList.add('visible');
         showExportButtons();
         document.getElementById('run-btn').disabled=false;
-        // Auto-save silencioso no Supabase
         autoSaveAnalysis(parsed);
       },400);
     } else {
-      showError('Resposta inesperada do agente. Tente novamente.');
+      const statusInfo=parsed.status?' (status: '+parsed.status+')':'';
+      console.warn('Resposta inesperada do agente:', JSON.stringify(parsed).substring(0,600));
+      showError('Resposta inesperada do agente'+statusInfo+'. Verifique o console para detalhes.');
       hideProgress();document.getElementById('run-btn').disabled=false;document.getElementById('empty-state').style.display='flex';
     }
   }catch(e){
     clearInterval(iv);
     const msg=e.message||String(e);
-    showError(msg.includes('JSON')||msg.includes('position')?'Resposta incompleta do modelo. Tente novamente.':'Erro: '+msg);
+    console.error('runAgent error:', msg);
+    showError('Erro: '+msg);
     hideProgress();document.getElementById('run-btn').disabled=false;document.getElementById('empty-state').style.display='flex';
   }
 }
@@ -2305,6 +2248,176 @@ function renderInfoInsuficiente(d){
     </div>`;
 }
 
+function renderWorkflowSVG(d){
+  const wv = d.workflow_visual || {};
+  const fases = wv.fases || [];
+  const etapas = fases.flatMap(f=>(f.etapas||[]).map(e=>({...e, fase:f.nome})));
+  const wfBody = document.getElementById('wf-body');
+  if(!wfBody) return;
+  if(!etapas.length){
+    wfBody.innerHTML='<p style="font-size:12px;font-weight:300;color:var(--text-3)">Nenhum workflow identificado nos dados.</p>';
+    return;
+  }
+  const lanes = [...new Set(etapas.map(e=>e.responsavel||'sistema'))];
+  const nodeW=136, nodeH=46, laneH=130, headerW=100, pad=20;
+  const colW = Math.max(nodeW+36, 160);
+  const W = headerW + pad + etapas.length * colW + pad;
+  const H = lanes.length * laneH + 30;
+  const colors = {
+    normal:    {fill:'#1a2e1e',stroke:'#3a8050',text:'#5cad72',sub:'#3a7050'},
+    gargalo:   {fill:'#2e1414',stroke:'#c04040',text:'#e05050',sub:'#904040'},
+    atencao:   {fill:'#2a200a',stroke:'#b07820',text:'#d09830',sub:'#807020'},
+    automacao: {fill:'#18142a',stroke:'#6040a0',text:'#8060c0',sub:'#503880'},
+    decisao:   {fill:'#0e1a2e',stroke:'#3060a0',text:'#4080c0',sub:'#204880'},
+    inicio:    {fill:'#1a2e1e',stroke:'#3a8050',text:'#5cad72',sub:'#3a7050'},
+    fim:       {fill:'#2a200a',stroke:'#b07820',text:'#d09830',sub:'#807020'},
+  };
+  const positions = {};
+  let svgNodes = '', svgArrows = '', svgLanes = '', svgFases = '';
+  lanes.forEach((lane,i)=>{
+    const y = 30 + i*laneH;
+    svgLanes += `<rect x="0" y="${y}" width="${W}" height="${laneH}" fill="${i%2===0?'rgba(255,255,255,0.03)':'rgba(255,255,255,0.055)'}"/>`;
+    svgLanes += `<rect x="0" y="${y}" width="${headerW}" height="${laneH}" fill="rgba(154,122,46,0.07)"/>`;
+    svgLanes += `<line x1="0" y1="${y+laneH}" x2="${W}" y2="${y+laneH}" stroke="rgba(154,122,46,0.12)" stroke-width="0.5"/>`;
+    svgLanes += `<line x1="${headerW}" y1="${y}" x2="${headerW}" y2="${y+laneH}" stroke="rgba(154,122,46,0.15)" stroke-width="0.5"/>`;
+    const lbl = lane.length>13 ? lane.substring(0,12)+'…' : lane;
+    svgLanes += `<text x="${headerW/2}" y="${y+laneH/2+1}" text-anchor="middle" dominant-baseline="middle" style="font-size:10px;font-weight:500;fill:rgba(176,156,80,0.7);font-family:inherit">${lbl}</text>`;
+  });
+  svgLanes += `<rect x="0" y="0" width="${W}" height="30" fill="rgba(154,122,46,0.05)"/>`;
+  svgLanes += `<line x1="0" y1="30" x2="${W}" y2="30" stroke="rgba(154,122,46,0.2)" stroke-width="0.5"/>`;
+  etapas.forEach((e,idx)=>{
+    const li = lanes.indexOf(e.responsavel||'sistema');
+    const cx = headerW + pad + idx*colW + nodeW/2;
+    const cy = 30 + li*laneH + laneH/2;
+    positions[e.id] = {cx, cy};
+    const c2 = colors[e.tipo] || colors.normal;
+    const x = cx - nodeW/2, y = cy - nodeH/2;
+    const nm = (e.nome||'').length>16 ? (e.nome||'').substring(0,15)+'…' : (e.nome||'');
+    const ch = (e.canal||e.responsavel||'').length>16 ? (e.canal||e.responsavel||'').substring(0,15)+'…' : (e.canal||e.responsavel||'');
+    if(e.tipo==='decisao'){
+      const hw=nodeW/2, hh=nodeH/2;
+      svgNodes += `<polygon points="${cx},${y} ${cx+hw},${cy} ${cx},${y+nodeH} ${cx-hw},${cy}" fill="${c2.fill}" stroke="${c2.stroke}" stroke-width="1.5" rx="0"/>`;
+      svgNodes += `<text x="${cx}" y="${cy-3}" text-anchor="middle" dominant-baseline="middle" style="font-size:9px;font-weight:500;fill:${c2.text};font-family:inherit">${nm}</text>`;
+    } else {
+      svgNodes += `<rect x="${x}" y="${y}" width="${nodeW}" height="${nodeH}" rx="8" fill="${c2.fill}" stroke="${c2.stroke}" stroke-width="1.5"/>`;
+      svgNodes += `<text x="${cx}" y="${cy-7}" text-anchor="middle" dominant-baseline="middle" style="font-size:10px;font-weight:500;fill:${c2.text};font-family:inherit">${nm}</text>`;
+      if(ch) svgNodes += `<text x="${cx}" y="${cy+9}" text-anchor="middle" dominant-baseline="middle" style="font-size:8.5px;fill:${c2.sub};font-family:inherit">${ch}</text>`;
+    }
+    if(e.tipo==='gargalo'){
+      svgNodes += `<rect x="${cx-22}" y="${y+nodeH+3}" width="44" height="13" rx="6" fill="#8a2020"/>`;
+      svgNodes += `<text x="${cx}" y="${y+nodeH+12}" text-anchor="middle" dominant-baseline="middle" style="font-size:7.5px;font-weight:700;fill:#faf8f4;font-family:inherit;letter-spacing:0.06em">GARGALO</text>`;
+    }
+  });
+  let prevFase=null, faseStart=0;
+  etapas.forEach((e,i)=>{
+    if(e.fase!==prevFase){
+      if(prevFase!==null){
+        const sx = headerW+pad+faseStart*colW, ex = headerW+pad+i*colW;
+        svgFases += `<rect x="${sx+4}" y="5" width="${ex-sx-8}" height="20" rx="10" fill="rgba(154,122,46,0.12)" stroke="rgba(154,122,46,0.2)" stroke-width="0.5"/>`;
+        svgFases += `<text x="${(sx+ex)/2}" y="15" text-anchor="middle" dominant-baseline="middle" style="font-size:9px;font-weight:500;fill:rgba(184,152,60,0.9);font-family:inherit">${prevFase}</text>`;
+      }
+      prevFase=e.fase; faseStart=i;
+    }
+  });
+  if(prevFase){
+    const sx=headerW+pad+faseStart*colW, ex=headerW+pad+etapas.length*colW;
+    svgFases+=`<rect x="${sx+4}" y="5" width="${ex-sx-8}" height="20" rx="10" fill="rgba(154,122,46,0.12)" stroke="rgba(154,122,46,0.2)" stroke-width="0.5"/>`;
+    svgFases+=`<text x="${(sx+ex)/2}" y="15" text-anchor="middle" dominant-baseline="middle" style="font-size:9px;font-weight:500;fill:rgba(184,152,60,0.9);font-family:inherit">${prevFase}</text>`;
+  }
+  etapas.forEach(e=>{
+    const from=positions[e.id]; if(!from) return;
+    (e.proximo||[]).forEach(nid=>{
+      const to=positions[nid]; if(!to) return;
+      const clr=e.tipo==='gargalo'?'#c04040':'#3a8050';
+      const x1=from.cx+(nodeW/2)-4, y1=from.cy, x2=to.cx-(nodeW/2)+4, y2=to.cy;
+      svgArrows+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${clr}" stroke-width="1.5" marker-end="url(#arr-wf)"/>`;
+    });
+    if(e.se_sim&&positions[e.se_sim]){
+      const to=positions[e.se_sim];
+      svgArrows+=`<line x1="${from.cx+nodeW/2}" y1="${from.cy}" x2="${to.cx-nodeW/2}" y2="${to.cy}" stroke="#3a8050" stroke-width="1.5" marker-end="url(#arr-wf)"/>`;
+      svgArrows+=`<text x="${(from.cx+to.cx)/2}" y="${(from.cy+to.cy)/2-5}" text-anchor="middle" style="font-size:8px;fill:#3a8050;font-family:inherit">sim</text>`;
+    }
+    if(e.se_nao&&positions[e.se_nao]){
+      const to=positions[e.se_nao];
+      svgArrows+=`<line x1="${from.cx}" y1="${from.cy+nodeH/2}" x2="${to.cx}" y2="${to.cy-nodeH/2}" stroke="#c04040" stroke-width="1.5" marker-end="url(#arr-wf)" stroke-dasharray="4 2"/>`;
+      svgArrows+=`<text x="${(from.cx+to.cx)/2+14}" y="${(from.cy+to.cy)/2}" text-anchor="middle" style="font-size:8px;fill:#c04040;font-family:inherit">não</text>`;
+    }
+  });
+  const legend = [['#3a8050','Normal'],['#c04040','Gargalo'],['#b07820','Atenção'],['#6040a0','Automação'],['#3060a0','Decisão']]
+    .map(l=>`<span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--text-3);margin-right:10px"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:${l[0]}"></span>${l[1]}</span>`).join('');
+  wfBody.innerHTML=`
+    <div style="margin-bottom:10px;padding:7px 12px;background:var(--surface-2);border-radius:var(--r-md);border:0.5px solid var(--border)">${legend}</div>
+    <div style="overflow-x:auto;padding-bottom:6px"><svg width="${Math.max(W,700)}" height="${H}" viewBox="0 0 ${Math.max(W,700)} ${H}" style="display:block;min-width:600px;border-radius:var(--r-md);border:0.5px solid var(--border)">
+      <defs><marker id="arr-wf" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+      <rect width="${Math.max(W,700)}" height="${H}" fill="#0e0c08" rx="8"/>
+      ${svgLanes}${svgArrows}${svgNodes}${svgFases}
+    </svg></div>`;
+}
+
+function renderAnaliseCritica(d){
+  const typeMap={'gargalo':'type-gargalo','risco':'type-risco','dependencia_tecnica':'type-dep','ineficiencia':'type-inef'};
+  const typeLabel={'gargalo':'Gargalo','risco':'Risco','dependencia_tecnica':'Dependência técnica','ineficiencia':'Ineficiência'};
+  const crits=d.analise_critica||[];
+  const metaEl=document.getElementById('crit-meta');
+  if(metaEl) metaEl.textContent=crits.length+' pontos';
+  const bodyEl=document.getElementById('crit-body');
+  if(bodyEl) bodyEl.innerHTML=crits.map(c=>`
+    <div class="crit-item">
+      <span class="crit-type ${typeMap[c.tipo]||'type-inef'}">${typeLabel[c.tipo]||c.tipo}</span>
+      <div class="crit-title">${c.titulo}</div>
+      <div class="crit-desc">${c.descricao}</div>
+      ${c.recomendacao?`<div class="crit-action">${c.recomendacao}</div>`:''}
+      ${c.ferramenta_ia?`<div style="margin-top:6px;font-size:11px;color:var(--gold);display:flex;align-items:center;gap:4px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3"/></svg>${c.ferramenta_ia}</div>`:''}
+    </div>`).join('');
+
+  const catSvg={'ia':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>','automacao':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>','processo':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>','ferramenta':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>'};
+  const catClass={'ia':'cat-ia','automacao':'cat-auto','processo':'cat-proc','ferramenta':'cat-proc'};
+  const catLabel={'ia':'IA','automacao':'Automação','processo':'Processo','ferramenta':'Ferramenta'};
+  const priClass={'alta':'badge-high','media':'badge-mid','baixa':'badge-low'};
+  const sugs=d.sugestoes_de_melhoria||[];
+  const sugBody=document.getElementById('sug-body');
+  if(sugBody) sugBody.innerHTML='<div class="sug-grid">'+sugs.map(function(s){
+    var hasIA=(s.ferramentas||[]).length>0;
+    var iaToolsHtml=(s.ferramentas||[]).map(function(t){return '<span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:3px 9px;border-radius:var(--r-pill);background:var(--gold-dim);color:var(--gold);border:1px solid rgba(154,122,46,0.2)">'+t+'</span>';}).join('');
+    var beneficioHtml=s.beneficio?'<div style="font-size:11.5px;font-weight:400;color:var(--sage);padding:7px 10px;background:var(--sage-dim);border-radius:var(--r-md);border:1px solid rgba(58,96,64,0.15);line-height:1.5"><strong style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;display:block;margin-bottom:2px">Benefício</strong>'+s.beneficio+'</div>':'';
+    var iaHtml=hasIA?'<div style="padding:7px 10px;background:var(--gold-dim);border-radius:var(--r-md);border:1px solid rgba(154,122,46,0.18)"><div style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:5px">Ferramentas de IA sugeridas</div><div style="display:flex;flex-wrap:wrap;gap:4px">'+iaToolsHtml+'</div></div>':'';
+    var catKey=s.categoria||'processo';
+    return '<div class="sug-card">'+'<div class="sug-cat '+(catClass[catKey]||'cat-proc')+'">'+(catSvg[catKey]||catSvg['processo'])+(catLabel[catKey]||catKey)+'</div>'+'<div class="sug-title">'+(s.titulo||'')+'</div>'+'<div class="sug-desc">'+(s.descricao||'')+'</div>'+beneficioHtml+iaHtml+'<div class="sug-footer" style="margin-top:auto"><div></div>'+'<span class="badge '+(priClass[s.complexidade]||'badge-mid')+'">'+(s.complexidade||'—')+'</span>'+'</div></div>';
+  }).join('')+'</div>';
+
+  const risks=d.riscos_se_nao_agir||[];
+  const riskMeta=document.getElementById('risk-meta');
+  if(riskMeta) riskMeta.textContent=risks.length+' riscos';
+  const riskBody=document.getElementById('risk-body');
+  if(riskBody) riskBody.innerHTML=risks.map(r=>`
+    <div class="risk-item">
+      <div class="risk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+      <div><div class="risk-title">${r.titulo}</div><div class="risk-desc">${r.descricao}</div></div>
+    </div>`).join('');
+}
+
+function showWorkflow(){
+  if(!lastData) return;
+  const sec=document.getElementById('sec-workflow');
+  if(!sec) return;
+  sec.style.display='block';
+  const btn=document.getElementById('btn-gerar-workflow');
+  if(btn) btn.style.display='none';
+  renderWorkflowSVG(lastData);
+  sec.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function showAnaliseCritica(){
+  if(!lastData) return;
+  const sec=document.getElementById('sec-analise-critica');
+  if(!sec) return;
+  sec.style.display='block';
+  const btn=document.getElementById('btn-gerar-analise');
+  if(btn) btn.style.display='none';
+  renderAnaliseCritica(lastData);
+  sec.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
 function renderAll(d){
   // Rebuild the full results HTML structure before populating
   document.getElementById('results').innerHTML=`
@@ -2314,7 +2427,6 @@ function renderAll(d){
       </div>
       <div class="sec-body">
         <div class="metrics-grid">
-          <div class="metric-card"><div class="metric-label">Maturidade do processo</div><div class="metric-value" id="m-score">—</div><div class="metric-bar"><div class="metric-bar-fill" id="m-bar" style="width:0%"></div></div><div class="metric-sub" id="m-label" style="margin-top:7px">—</div></div>
           <div class="metric-card"><div class="metric-label">Tarefas identificadas</div><div class="metric-value" id="m-tasks">—</div><div class="metric-sub" id="m-areas">—</div></div>
           <div class="metric-card"><div class="metric-label">Sprints estimadas</div><div class="metric-value" id="m-sprints">—</div><div class="metric-sub" id="m-weeks">—</div></div>
         </div>
@@ -2323,40 +2435,49 @@ function renderAll(d){
       </div>
     </div>
     <div class="section">
-      <div class="sec-hd"><div class="sec-title"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>Cronograma de sprints</div><div class="sec-meta" id="sprint-meta">—</div></div>
-      <div class="sec-body" id="sprint-body"></div>
-    </div>
-    <div class="section">
       <div class="sec-hd"><div class="sec-title"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>Usuários impactados</div></div>
       <div class="sec-body" id="users-body"></div>
+    </div>
+    <div class="section">
+      <div class="sec-hd"><div class="sec-title"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>Cronograma de sprints</div><div class="sec-meta" id="sprint-meta">—</div></div>
+      <div class="sec-body" id="sprint-body"></div>
     </div>
     <div class="section">
       <div class="sec-hd"><div class="sec-title"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>Tarefas identificadas</div><div class="sec-meta" id="tasks-meta">—</div></div>
       <div class="sec-body"><div class="filter-bar" id="filter-bar"></div><div id="tasks-body"></div></div>
     </div>
-    <div class="section">
+    <div class="section" id="sec-workflow" style="display:none">
       <div class="sec-hd"><div class="sec-title"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>Workflow visual</div></div>
       <div class="sec-body" id="wf-body"></div>
     </div>
-    <div class="section">
+    <div id="btn-gerar-workflow" style="margin:0 0 20px 0">
+      <button class="btn btn-ghost" onclick="showWorkflow()" style="width:100%;justify-content:center;padding:14px;font-size:12px;border-style:dashed">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Gerar workflow visual
+      </button>
+    </div>
+    <div class="section" id="sec-analise-critica" style="display:none">
       <div class="sec-hd"><div class="sec-title"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>Análise crítica</div><div class="sec-meta" id="crit-meta">—</div></div>
       <div class="sec-body" id="crit-body"></div>
     </div>
-    <div class="section">
+    <div class="section" id="sec-sugestoes" style="display:none">
       <div class="sec-hd"><div class="sec-title"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg></div>Sugestões de melhoria</div></div>
       <div class="sec-body" id="sug-body"></div>
     </div>
-    <div class="section">
+    <div class="section" id="sec-riscos" style="display:none">
       <div class="sec-hd"><div class="sec-title"><div class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>Riscos se não agir</div><div class="sec-meta" id="risk-meta">—</div></div>
       <div class="sec-body" id="risk-body"></div>
+    </div>
+    <div id="btn-gerar-analise" style="margin:0 0 20px 0">
+      <button class="btn btn-ghost" onclick="showAnaliseCritica()" style="width:100%;justify-content:center;padding:14px;font-size:12px;border-style:dashed">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Gerar análise crítica, sugestões e riscos
+      </button>
     </div>`;
 
   // ── CONTEXTO GERAL ──
   const ctx=d.contexto_geral||{};
-  const score=Math.round(ctx.maturidade||0);
-  document.getElementById('m-score').textContent=score;
-  document.getElementById('m-bar').style.width=score+'%';
-  document.getElementById('m-label').textContent='';
+
 
   // Count all tasks across teams
   const tarefasObj=d.tarefas||{};
@@ -2422,80 +2543,6 @@ function renderAll(d){
     return`<button class="ftab${a==='Todos'?' active':''}" onclick="filterTasks('${a}',this)">${a}<span class="cnt">${cnt}</span></button>`;
   }).join('');
   renderTasks();
-
-  // ── WORKFLOW ──
-  const fases=(d.workflow_visual||{}).fases||[];
-  if(fases.length){
-    // Flatten all etapas into columns per fase
-    document.getElementById('wf-body').innerHTML=`<div class="wf-grid" style="grid-template-columns:repeat(${fases.length},1fr)">`+
-      fases.map(f=>`<div class="wf-col">
-        <div class="wf-col-header">${f.nome}</div>
-        ${(f.etapas||[]).map(e=>{
-          const tipoClass={'gargalo':'wf-pill-amber','atencao':'wf-pill-amber','automacao':'wf-pill-teal','decisao':'wf-pill-blue','normal':'default'}[e.tipo]||'default';
-          if(tipoClass!=='default')return`<div class="wf-pill ${tipoClass}">${e.nome}</div>`;
-          return`<div class="wf-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="2"/></svg>${e.nome}</div>`;
-        }).join('')}
-      </div>`).join('')+'</div>';
-  } else {
-    document.getElementById('wf-body').innerHTML='<p style="font-size:12px;font-weight:300;color:var(--text-3)">Nenhum workflow identificado.</p>';
-  }
-
-  // ── ANÁLISE CRÍTICA ──
-  const typeMap={'gargalo':'type-gargalo','risco':'type-risco','dependencia_tecnica':'type-dep','ineficiencia':'type-inef'};
-  const typeLabel={'gargalo':'Gargalo','risco':'Risco','dependencia_tecnica':'Dependência técnica','ineficiencia':'Ineficiência'};
-  const crits=d.analise_critica||[];
-  document.getElementById('crit-meta').textContent=crits.length+' pontos';
-  document.getElementById('crit-body').innerHTML=crits.map(c=>`
-    <div class="crit-item">
-      <span class="crit-type ${typeMap[c.tipo]||'type-inef'}">${typeLabel[c.tipo]||c.tipo}</span>
-      <div class="crit-title">${c.titulo}</div>
-      <div class="crit-desc">${c.descricao}</div>
-      ${c.recomendacao?`<div class="crit-action">${c.recomendacao}</div>`:''}
-      ${c.ferramenta_ia?`<div style="margin-top:6px;font-size:11px;color:var(--gold);display:flex;align-items:center;gap:4px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3"/></svg>${c.ferramenta_ia}</div>`:''}
-    </div>`).join('');
-
-  // ── SUGESTÕES ──
-  const catSvg={
-    'ia':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>',
-    'automacao':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>',
-    'processo':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>',
-    'ferramenta':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>'
-  };
-  const catClass={'ia':'cat-ia','automacao':'cat-auto','processo':'cat-proc','ferramenta':'cat-proc'};
-  const catLabel={'ia':'IA','automacao':'Automação','processo':'Processo','ferramenta':'Ferramenta'};
-  const priClass={'alta':'badge-high','media':'badge-mid','baixa':'badge-low'};
-  const sugs=d.sugestoes_de_melhoria||[];
-  document.getElementById('sug-body').innerHTML='<div class="sug-grid">'+sugs.map(function(s){
-    var hasIA=(s.ferramentas||[]).length>0;
-    var iaToolsHtml=(s.ferramentas||[]).map(function(t){
-      return '<span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:3px 9px;border-radius:var(--r-pill);background:var(--gold-dim);color:var(--gold);border:1px solid rgba(154,122,46,0.2)">'+t+'</span>';
-    }).join('');
-    var beneficioHtml=s.beneficio
-      ? '<div style="font-size:11.5px;font-weight:400;color:var(--sage);padding:7px 10px;background:var(--sage-dim);border-radius:var(--r-md);border:1px solid rgba(58,96,64,0.15);line-height:1.5"><strong style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;display:block;margin-bottom:2px">Benefício</strong>'+s.beneficio+'</div>'
-      : '';
-    var iaHtml=hasIA
-      ? '<div style="padding:7px 10px;background:var(--gold-dim);border-radius:var(--r-md);border:1px solid rgba(154,122,46,0.18)"><div style="font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:5px">Ferramentas de IA sugeridas</div><div style="display:flex;flex-wrap:wrap;gap:4px">'+iaToolsHtml+'</div></div>'
-      : '';
-    var catKey=s.categoria||'processo';
-    return '<div class="sug-card">'
-      +'<div class="sug-cat '+(catClass[catKey]||'cat-proc')+'">'+(catSvg[catKey]||catSvg['processo'])+(catLabel[catKey]||catKey)+'</div>'
-      +'<div class="sug-title">'+(s.titulo||'')+'</div>'
-      +'<div class="sug-desc">'+(s.descricao||'')+'</div>'
-      +beneficioHtml
-      +iaHtml
-      +'<div class="sug-footer" style="margin-top:auto"><div></div>'
-      +'<span class="badge '+(priClass[s.complexidade]||'badge-mid')+'">'+(s.complexidade||'—')+'</span>'
-      +'</div></div>';
-  }).join('')+'</div>';
-
-  // ── RISCOS ──
-  const risks=d.riscos_se_nao_agir||[];
-  document.getElementById('risk-meta').textContent=risks.length+' riscos';
-  document.getElementById('risk-body').innerHTML=risks.map(r=>`
-    <div class="risk-item">
-      <div class="risk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-      <div><div class="risk-title">${r.titulo}</div><div class="risk-desc">${r.descricao}</div></div>
-    </div>`).join('');
 }
 
 function filterTasks(area,el){activeArea=area;document.querySelectorAll('.ftab').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderTasks();}
@@ -2583,41 +2630,6 @@ function showExportButtons(){
 
 // ── HISTÓRICO ──
 const historico=[];
-function mapSupabaseAnalysisToHistory(row){
-  const payload = row.payload || {};
-  const ctx = payload.contexto_geral || {};
-  const titulo = row.titulo || ctx.resumo || 'Análise sem título';
-  return {
-    ts: new Date(row.criado_em || Date.now()),
-    titulo: titulo.length > 60 ? titulo.substring(0,60) + '…' : titulo,
-    data: payload
-  };
-}
-
-async function loadHistoricoFromSupabase(){
-  try{
-    const res = await fetch(SB_URL + '/rest/v1/analises?select=titulo,payload,criado_em&order=criado_em.desc&limit=20', {
-      headers: {
-        'apikey': SB_KEY,
-        'Authorization': 'Bearer ' + SB_KEY,
-        'Accept': 'application/json'
-      }
-    });
-    if(!res.ok){
-      throw new Error('Supabase ' + res.status);
-    }
-    const rows = await res.json();
-    historico.splice(0, historico.length, ...(rows || []).map(mapSupabaseAnalysisToHistory));
-    const hBadge = document.getElementById('nav-badge-historico');
-    if(hBadge)hBadge.textContent = historico.length;
-    if(document.getElementById('view-historico') && document.getElementById('view-historico').style.display !== 'none'){
-      renderHistoricoView();
-    }
-  }catch(e){
-    console.warn('Supabase histórico:', e);
-  }
-}
-
 function saveToHistorico(d){
   const ctx=d.contexto_geral||{};
   historico.unshift({ts:new Date(),titulo:ctx.resumo?ctx.resumo.substring(0,60)+'…':'Análise sem título',data:d});
@@ -2846,7 +2858,6 @@ function buildDocx(){
     new D.Paragraph({children:[new D.TextRun({text:'Relatório de Workflow — Agente de Análise',size:24,color:'888070'})],spacing:{after:200}}),
     rule(),
     h1('1. Contexto Geral'),
-    label('Maturidade',ctx.maturidade||0),
     label('Resumo',ctx.resumo||'—'),
     label('Problema',ctx.problema||'—'),
     label('Oportunidade',ctx.oportunidade||'—'),
@@ -2977,7 +2988,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
   toWrap.forEach(child=>va.appendChild(child));
   content.appendChild(va);
-  loadHistoricoFromSupabase();
 });
 
 let tvActiveArea='Todos';
@@ -3216,10 +3226,10 @@ function copyTask(idx){
     </div>
 
     <!-- SPLIT LAYOUT: input left, output right -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;flex:1;overflow:hidden;min-height:0;height:100%">
+    <div style="display:grid;grid-template-columns:1fr 1fr;overflow:hidden;flex:1;min-height:0">
 
       <!-- LEFT: Input -->
-      <div style="display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden;height:100%">
+      <div style="display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden;min-height:0">
         <div style="flex-shrink:0;padding:14px 18px;border-bottom:1px solid var(--border);background:var(--surface-2)">
           <div style="font-size:9.5px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-3)">Descreva a solicitação</div>
         </div>
@@ -3240,7 +3250,7 @@ function copyTask(idx){
       </div>
 
       <!-- RIGHT: Output -->
-      <div style="display:flex;flex-direction:column;overflow:hidden;height:100%">
+      <div style="display:flex;flex-direction:column;overflow:hidden;min-height:0">
         <div style="flex-shrink:0;padding:14px 18px;border-bottom:1px solid var(--border);background:var(--surface-2);display:flex;align-items:center;justify-content:space-between">
           <div style="font-size:9.5px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-3)">Tarefa gerada</div>
           <div style="display:flex;gap:6px">
