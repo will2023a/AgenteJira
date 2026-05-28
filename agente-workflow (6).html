@@ -1421,6 +1421,65 @@ let customPrompt = null;
 const SB_URL = 'https://vjsqykohdbverotsxpxd.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqc3F5a29oZGJ2ZXJvdHN4cHhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5MDk3OTMsImV4cCI6MjA5NTQ4NTc5M30.0yg4bbpuHd5PJ6ybKSO_QBvR4tAE9XdArB8jfNV9yf0';
 
+// ── ANTHROPIC CONFIG ──
+const ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages';
+const ANTHROPIC_VERSION = '2023-06-01';
+const ANTHROPIC_KEY_STORAGE = 'anthropic_api_key';
+
+function getAnthropicApiKey(){
+  try{
+    return (localStorage.getItem(ANTHROPIC_KEY_STORAGE) || '').trim();
+  }catch(e){
+    return '';
+  }
+}
+
+function ensureAnthropicApiKey(){
+  var key = getAnthropicApiKey();
+  if(key) return key;
+  if(typeof prompt === 'function'){
+    key = (prompt('Informe a chave da Anthropic para liberar as chamadas da IA:') || '').trim();
+    if(key){
+      try{ localStorage.setItem(ANTHROPIC_KEY_STORAGE, key); }catch(e){}
+      return key;
+    }
+  }
+  return '';
+}
+
+function getAnthropicHeaders(){
+  var apiKey = ensureAnthropicApiKey();
+  if(!apiKey){
+    throw new Error('Chave da Anthropic não configurada.');
+  }
+  return {
+    'Content-Type': 'application/json',
+    'x-api-key': apiKey,
+    'anthropic-version': ANTHROPIC_VERSION
+  };
+}
+
+async function callAnthropicMessages(payload){
+  var res = await fetch(ANTHROPIC_URL, {
+    method: 'POST',
+    mode: 'cors',
+    headers: getAnthropicHeaders(),
+    body: JSON.stringify(payload)
+  });
+  var text = await res.text();
+  var data = {};
+  try{
+    data = text ? JSON.parse(text) : {};
+  }catch(e){
+    data = { raw: text };
+  }
+  if(!res.ok){
+    var apiMsg = data && data.error && data.error.message ? data.error.message : (data.message || data.raw || 'HTTP ' + res.status);
+    throw new Error(apiMsg);
+  }
+  return data;
+}
+
 // ── Detecta se está rodando dentro do sandbox do Claude Artifacts ──
 function isClaudeArtifact(){
   try{
@@ -1443,19 +1502,13 @@ async function sbInsertViaProxy(table, payload){
     'Headers: Content-Type: application/json | apikey: ' + SB_KEY + ' | Authorization: Bearer ' + SB_KEY + ' | Prefer: return=minimal\n' +
     'Body: ' + JSON.stringify(clean);
 
-  var res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 64,
-      system: 'Você é um agente que apenas confirma operações. Responda somente com JSON puro, sem markdown.',
-      messages: [{ role: 'user', content: proxyPrompt }]
-    })
+  var res = await callAnthropicMessages({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 64,
+    system: 'Você é um agente que apenas confirma operações. Responda somente com JSON puro, sem markdown.',
+    messages: [{ role: 'user', content: proxyPrompt }]
   });
-  if(!res.ok) throw new Error('Proxy HTTP ' + res.status);
-  var data = await res.json();
-  var txt = (data.content||[]).filter(function(b){return b.type==='text';}).map(function(b){return b.text;}).join('');
+  var txt = (res.content||[]).filter(function(b){return b.type==='text';}).map(function(b){return b.text;}).join('');
   try{
     var result = JSON.parse(txt.replace(/```json|```/g,'').trim());
     if(result.ok === false) throw new Error(result.error||'Erro no proxy');
@@ -1754,19 +1807,14 @@ async function runTarefaPadrao(){
   },1800);
 
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:4000,
-        system:TP_SYSTEM_PROMPT,
-        messages:[{role:'user',content:input}]
-      })
+    const res=await callAnthropicMessages({
+      model:'claude-sonnet-4-20250514',
+      max_tokens:4000,
+      system:TP_SYSTEM_PROMPT,
+      messages:[{role:'user',content:input}]
     });
     clearInterval(loadIv);
-    const data=await res.json();
-    const md=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    const md=(res.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
     tpMarkdownResult=md;
     document.getElementById('tp-loading').style.display='none';
     document.getElementById('tp-result').innerHTML=renderMarkdown(md);
@@ -2150,10 +2198,9 @@ async function runAgent(){
   const iv=setInterval(()=>{prog=Math.min(prog+4,80);setProgress(prog);},400);
   try{
     setStatus('Extraindo metadados e tarefas...');
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:8000,system:sys,messages:[{role:'user',content:userMessage}]})});
+    const res=await callAnthropicMessages({model:'claude-sonnet-4-20250514',max_tokens:8000,system:sys,messages:[{role:'user',content:userMessage}]});
     clearInterval(iv);setProgress(90);setStatus('Montando relatório...');
-    const data=await res.json();
-    const raw=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    const raw=(res.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
     const clean=raw.replace(/```json|```/g,'').trim();
     const parsed=safeParseJSON(clean);
 
@@ -2536,6 +2583,41 @@ function showExportButtons(){
 
 // ── HISTÓRICO ──
 const historico=[];
+function mapSupabaseAnalysisToHistory(row){
+  const payload = row.payload || {};
+  const ctx = payload.contexto_geral || {};
+  const titulo = row.titulo || ctx.resumo || 'Análise sem título';
+  return {
+    ts: new Date(row.criado_em || Date.now()),
+    titulo: titulo.length > 60 ? titulo.substring(0,60) + '…' : titulo,
+    data: payload
+  };
+}
+
+async function loadHistoricoFromSupabase(){
+  try{
+    const res = await fetch(SB_URL + '/rest/v1/analises?select=titulo,payload,criado_em&order=criado_em.desc&limit=20', {
+      headers: {
+        'apikey': SB_KEY,
+        'Authorization': 'Bearer ' + SB_KEY,
+        'Accept': 'application/json'
+      }
+    });
+    if(!res.ok){
+      throw new Error('Supabase ' + res.status);
+    }
+    const rows = await res.json();
+    historico.splice(0, historico.length, ...(rows || []).map(mapSupabaseAnalysisToHistory));
+    const hBadge = document.getElementById('nav-badge-historico');
+    if(hBadge)hBadge.textContent = historico.length;
+    if(document.getElementById('view-historico') && document.getElementById('view-historico').style.display !== 'none'){
+      renderHistoricoView();
+    }
+  }catch(e){
+    console.warn('Supabase histórico:', e);
+  }
+}
+
 function saveToHistorico(d){
   const ctx=d.contexto_geral||{};
   historico.unshift({ts:new Date(),titulo:ctx.resumo?ctx.resumo.substring(0,60)+'…':'Análise sem título',data:d});
@@ -2895,6 +2977,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
   toWrap.forEach(child=>va.appendChild(child));
   content.appendChild(va);
+  loadHistoricoFromSupabase();
 });
 
 let tvActiveArea='Todos';
